@@ -1,19 +1,19 @@
 import React from 'react';
 import './App.css';
-import Navbar from './components/navbar';
+import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
+import GlobalFooter from './components/GlobalFooter';
 
 const App: React.FC = () => {
   return (
     <body>
-      <Navbar/>
       <div className='front-page'>
+          <Navbar/>
           <Login/>
-          <Register/>
+          <GlobalFooter/>
       </div>
     </body>
-
   );
 }
 
