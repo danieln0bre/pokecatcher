@@ -1,7 +1,7 @@
 /* Font */
 @font-face {
   font-family: 'PokemonFont';
-  src: url('../pokemonfont/Pokemon-Solid.ttf') format('truetype');
+  src: url('../../pokemonfont/Pokemon-Solid.ttf') format('truetype');
 }
 
 /* Body and General Styles */
@@ -17,7 +17,7 @@ header {
 
 /* Footer Styles */
 footer {
-  height: 6rem;
+  height: 4rem;
   background-color: rgba(21, 60, 97, 0.5);
   text-shadow: 2px 2px 0 #000;
   color: rgb(250, 199, 90);
@@ -124,7 +124,7 @@ h3 {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-image: url('../public/images/landscape.jpg');
+  background-image: url('../../public/images/landscape.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 60%;
@@ -155,7 +155,7 @@ h3 {
 }
 
 .login,
-.register {
+.register{
   background-color: rgb(0, 174, 255, 0.5);
   margin-left: 10px;
   margin-right: 10px;
@@ -220,8 +220,8 @@ h3 {
   padding: 30px;
 }
 
-/* Not Registered Styles */
-.not-registered {
+/* Log/Reg Redirect */
+.login-register-redirect {
   padding: 1rem;
   color: rgb(250, 199, 90);
   font-weight: bold;

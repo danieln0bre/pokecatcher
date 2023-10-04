@@ -36,7 +36,7 @@ const Login: React.FC = () => {
                     onChange={handlePasswordChange}
                 />
                 <button type='submit'>Enter</button>
-                <a className='not-registered'>Not registered?</a>
+                <a className='login-register-redirect' href="/register">Not registered?</a>
             </form>
         </div>
     </div>

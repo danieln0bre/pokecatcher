@@ -4,7 +4,7 @@ const GlobalFooter: React.FC = () => {
     return (
         <footer>
             <p>
-                &copy; 2023 TouglesLabs
+                &copy; 2023 danielnq
             </p>
         </footer>
     )

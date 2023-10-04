@@ -36,35 +36,38 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className='register'>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          placeholder='Username'
-          value={username}
-          onChange={handleUsernameChange}
-        />
-        <input
-          type='email'
-          placeholder='Email'
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <input
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <input
-          type='password'
-          placeholder='Confirm Password'
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-        />
-        <button type='submit'>Submit</button>
-      </form>
+    <div className='main-div'>
+      <div className='register'>
+        <h2>Register</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type='text'
+            placeholder='Username'
+            value={username}
+            onChange={handleUsernameChange}
+          />
+          <input
+            type='email'
+            placeholder='Email'
+            value={email}
+            onChange={handleEmailChange}
+          />
+          <input
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <input
+            type='password'
+            placeholder='Confirm Password'
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
+          <button type='submit'>Submit</button>
+        </form>
+        <a className='login-register-redirect' href='/login'>Already a member?</a>
+      </div>
     </div>
   );
 };

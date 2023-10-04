@@ -11,7 +11,7 @@ return(
                     </a>
                 </div>
                 <div>
-                    <a className='collection-link'>
+                    <a className='collection-link' href='/collection'>
                         Collection
                     </a>
                     <a className='profile-link'>
