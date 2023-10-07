@@ -137,13 +137,58 @@ h3 {
 
 /* Main Division Styles */
 .main-div {
-  margin-top: 4rem;
+  margin-top: 3rem;
   justify-content: center;
   display: flex;
   flex-direction: row;
   align-items: center;
   text-align: center;
 }
+
+/* Profile div styles */
+.profile {
+  background-color: rgb(0, 174, 255, 0.5);
+}
+
+/* Catcher div styles */
+.catcher{
+  background-color: rgb(0, 174, 255, 0.5);
+}
+
+.collection-panel {
+  background-color: rgba(0, 174, 255, 0.5);
+  width: 70%;
+  height: 65vh;
+  border-radius: 20px;
+
+}
+
+.collection-div{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.single-pokemon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 174, 255, 0.5);
+  border-radius: 10px;
+  justify-content: center;
+  padding: 5px;
+  height: 100px; /* Example height */
+  width: 100px; /* Example width */
+  margin: 30px;
+  box-shadow: #000 0px 0px 10px;
+}
+
+.single-pokemon img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 
 /* Registration and Login Styles */
 .register h2 {
