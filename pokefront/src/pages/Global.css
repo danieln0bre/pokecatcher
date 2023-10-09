@@ -148,8 +148,33 @@ h3 {
 /* Profile div styles */
 .profile {
   background-color: rgb(0, 174, 255, 0.5);
+  width: 50%;
+  height: 65vh;
+  border-radius: 20px;
 }
 
+.profile-info {
+  display: flex;
+  flex-direction: grid;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+  width: 100%;
+
+}
+/* Profile Image Styles */
+.profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #ccc;
+  object-fit: cover; /* Maintain aspect ratio */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Adding a subtle shadow */
+}
+
+.profile img:hover {
+  transform: scale(1.1); /* Add a slight zoom on hover */
+}
 /* Catcher div styles */
 .catcher{
   background-color: rgb(0, 174, 255, 0.5);
@@ -224,8 +249,30 @@ h3 {
   width: 100%;
 }
 
+.update {
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+  width: 30%;
+  border-radius: 5%;
+}
+
+.update form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
 .login input,
-.register input {
+.register input,
+.update input {
   width: 80%;
   padding: 10px;
   margin: 10px;
@@ -238,7 +285,8 @@ h3 {
 }
 
 .login button,
-.register button {
+.register button, 
+.update button {
   background-color: rgb(250, 199, 90);
   border: none;
   border-radius: 10px;
