@@ -19,6 +19,10 @@ const Collection: React.FC = () => {
             <Pokemon/>
             <Pokemon/>
             <Pokemon/>
+            <Pokemon/>
+            <Pokemon/>
+            <Pokemon/>
+            <Pokemon/>
           </div>
         </div>
     </div>

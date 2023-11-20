@@ -12,7 +12,6 @@ const Profile: React.FC = () => {
               </div>
               <ProfileUpdate/>
             </div>
-
         </div>
     </div>
 

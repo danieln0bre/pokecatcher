@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import CollectionPage from './pages/CollectionPage';
 import ProfilePage from './pages/ProfilePage';
+import CatcherPage from './pages/CatcherPage';
 
 export interface IApplicationProps {}
 
@@ -15,6 +16,7 @@ const Application: React.FC<IApplicationProps> = (props) => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/collection" element={<CollectionPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/" element={<CatcherPage />} />
       </Routes>
     </BrowserRouter>
   );
