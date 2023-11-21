@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -21,17 +22,14 @@ const Register: React.FC = () => {
   const handleConfirmPasswordChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setConfirmPassword(event.target.value);
+    setConfirmPassword(event.target.value); 
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    // Add registration logic here
+    const response = await axios.post('http://localhost:5000/api/users', {})
     console.log('Registering with:', {
-      username,
-      email,
-      password,
-      confirmPassword,
+      response,
     });
   };
 
