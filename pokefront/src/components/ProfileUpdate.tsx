@@ -26,13 +26,23 @@ const ProfileUpdate: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Add registration logic here
-    console.log('Registering with:', {
+    // Add update logic here
+    console.log('Updating with:', {
       username,
       email,
       password,
       confirmPassword,
     });
+
+    // Send only the fields that are not empty to the server for update
+    const updatedFields: { [key: string]: string } = {};
+    if (username !== '') updatedFields.username = username;
+    if (email !== '') updatedFields.email = email;
+    if (password !== '') updatedFields.password = password;
+    if (confirmPassword !== '') updatedFields.confirmPassword = confirmPassword;
+
+    // Send updatedFields to the server for processing
+    // Example: updateProfile(updatedFields);
   };
 
   return (
@@ -41,29 +51,29 @@ const ProfileUpdate: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <input
             type='text'
-            placeholder='Username'
+            placeholder='New Username'
             value={username}
             onChange={handleUsernameChange}
           />
           <input
             type='email'
-            placeholder='Email'
+            placeholder='New Email'
             value={email}
             onChange={handleEmailChange}
           />
           <input
             type='password'
-            placeholder='Password'
+            placeholder='New Password'
             value={password}
             onChange={handlePasswordChange}
           />
           <input
             type='password'
-            placeholder='Confirm Password'
+            placeholder='Confirm New Password'
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
           />
-          <button type='submit'>Submit</button>
+          <button type='submit'>Update</button>
         </form>
     </div>
   );

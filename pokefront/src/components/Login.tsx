@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -12,10 +13,12 @@ const Login: React.FC = () => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    // Add login logic here
-    console.log('Logging in with:', { email, password });
+    const response = await axios.post('http://localhost:8080/auth/login', { email, password})
+    console.log('Log in with:', {
+      response,
+    });
   };
 
   return (
