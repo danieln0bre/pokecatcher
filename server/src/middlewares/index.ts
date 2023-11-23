@@ -16,6 +16,7 @@ export const isOwner = async (req: express.Request, res: express.Response, next:
             return res.sendStatus(403);
         }
 
+        next();
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
@@ -37,7 +38,7 @@ export const isAuthenticated = async (req: express.Request, res: express.Respons
             return res.sendStatus(403);
         }
 
-        merge(req, { itentity: existingUser})
+        merge(req, { identity: existingUser });
 
         return next();
     } catch (error) {
