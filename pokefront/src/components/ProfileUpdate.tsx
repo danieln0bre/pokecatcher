@@ -61,18 +61,6 @@ const ProfileUpdate: React.FC = () => {
             value={email}
             onChange={handleEmailChange}
           />
-          <input
-            type='password'
-            placeholder='New Password'
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          <input
-            type='password'
-            placeholder='Confirm New Password'
-            value={confirmPassword}
-            onChange={handleConfirmPasswordChange}
-          />
           <button type='submit'>Update</button>
         </form>
     </div>
