@@ -8,7 +8,7 @@ const Profile: React.FC = () => {
             <h2>Profile</h2>
             <div className='profile-info'>
               <div>
-              <img src="images/profile-picture.jpeg" alt={`Random Pokemon`} />
+              <img src="images/profile-picture.jpeg" alt={`User Picture`} />
               </div>
               <ProfileUpdate/>
             </div>

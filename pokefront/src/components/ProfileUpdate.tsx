@@ -48,6 +48,7 @@ const ProfileUpdate: React.FC = () => {
   return (
     <div className='update'>
         <h2>Update</h2>
+        <button type='submit'>Upload picture</button>
         <form onSubmit={handleSubmit}>
           <input
             type='text'
