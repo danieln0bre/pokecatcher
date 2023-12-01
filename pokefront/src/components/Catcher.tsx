@@ -6,26 +6,25 @@ const Catcher: React.FC = () => {
   const generateRandomPokemonId = () => {
     const minId = 1; // Set the minimum Pokemon ID
     const maxId = 151; // Set the maximum Pokemon ID or adjust as needed
-  
+
     return Math.floor(Math.random() * (maxId - minId + 1)) + minId;
   };
-  
+
   const handleCatch = async () => {
     try {
       // Generate a random Pokemon ID
       const randomPokemonId = generateRandomPokemonId();
-  
-      // Fetch and save Pokemon data using the imported function
-      await fetchAndSavePokemonData(randomPokemonId);
-  
+
+      // Fetch and save Pokemon data using the route
+      const response = await fetch(`hhtp://localhost8080/api/pokemon/${randomPokemonId}`); // Replace with your actual route
+      const caughtPokemonData = await response.json();
+
       // Update the state to store the caught Pokemon
-      const caughtPokemonData = await PokemonModel.findOne({ number: randomPokemonId });
       setCaughtPokemon(caughtPokemonData);
     } catch (error) {
       console.error('Error catching Pokemon:', error);
     }
   };
-  
 
   return (
     <div className='main-div'>

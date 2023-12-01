@@ -6,7 +6,7 @@ export default (router: express.Router) => {
   // Route to update a Pokemon
   router.patch('/pokemon/:pokemonId', isAuthenticated, isOwner, async (req, res) => {
     const { pokemonId } = req.params;
-    const userId = req.user.id;
+    const userId = req as any; // Assuming your user ID is stored in the _id field
 
     try {
       // Your logic here for handling the update
@@ -20,7 +20,7 @@ export default (router: express.Router) => {
   // Route to fetch and save Pokemon data
   router.post('/pokemon/:pokemonId', isAuthenticated, async (req, res) => {
     const { pokemonId } = req.params;
-    const userId = req.user.id;
+    const userId = req as any; // Assuming your user ID is stored in the _id field
 
     try {
       await fetchAndSavePokemonData(req, res); // Pass the entire request and response objects
@@ -33,7 +33,7 @@ export default (router: express.Router) => {
   // Example of using isOwner middleware for deletion
   router.delete('/pokemon/:pokemonId', isAuthenticated, isOwner, async (req, res) => {
     const { pokemonId } = req.params;
-    const userId = req.user.id;
+    const userId = req as any; // Assuming your user ID is stored in the _id field
 
     try {
       // Your logic here for handling deletion by the owner
