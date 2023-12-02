@@ -16,7 +16,7 @@ const Catcher: React.FC = () => {
       const randomPokemonId = generateRandomPokemonId();
 
       // Fetch and save Pokemon data using the route
-      const response = await fetch(`hhtp://localhost8080/api/pokemon/${randomPokemonId}`); // Replace with your actual route
+      const response = await fetch(`http://localhost:8080/pokemon/${randomPokemonId}`); // Replace with your actual route
       const caughtPokemonData = await response.json();
 
       // Update the state to store the caught Pokemon

@@ -3,14 +3,16 @@ import express from 'express';
 import { PokemonModel } from '../db/pokemons';
 import { UserModel } from '../db/users';
 
-const POKEDEXAPI_BASE_URL = 'https://ex.traction.one/pokedex';
+const POKEDEXAPI_BASE_URL = 'https://ex.traction.one/pokedex/pokemon';
 
 export const fetchAndSavePokemonData = async (req: express.Request, res: express.Response) => {
   try {
     const { pokemonId, userId } = req.params;
+    console.log(req.params);
 
     // Make a request to the Pokemon API
     const response = await axios.get(`${POKEDEXAPI_BASE_URL}/${pokemonId}`);
+    console.log(response.data);
     
     // Extract relevant data from the API response
     const { name, types, id, sprites } = response.data;
