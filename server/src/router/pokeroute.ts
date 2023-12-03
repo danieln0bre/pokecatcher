@@ -3,18 +3,6 @@ import { isAuthenticated, isOwner } from "../middlewares";
 import { fetchAndSavePokemonData } from "../controllers/pokemonService";
 
 export default (router: express.Router) => {
-  // Route to get Pokemon by ID
-  router.get('/pokemon/:pokemonId', isAuthenticated, async (req, res) => {
-    const { pokemonId } = req.params;
-
-    try {
-      // Your logic here for fetching Pokemon by ID
-      res.status(200).send(`Details for Pokemon with ID ${pokemonId}`);
-    } catch (error) {
-      console.error(`Error: ${error.message}`);
-      res.status(500).send('Internal Server Error');
-    }
-  });
 
   // Route to update a Pokemon
   router.patch('/pokemon/:pokemonId', isAuthenticated, isOwner, async (req, res) => {
@@ -32,9 +20,6 @@ export default (router: express.Router) => {
 
   // Route to fetch and save Pokemon data
   router.post('/pokemon/:pokemonId', isAuthenticated, async (req, res) => {
-    const { pokemonId } = req.params;
-    const userId = req as any; // Assuming your user ID is stored in the _id field
-
     try {
       await fetchAndSavePokemonData(req, res); // Pass the entire request and response objects
     } catch (error) {

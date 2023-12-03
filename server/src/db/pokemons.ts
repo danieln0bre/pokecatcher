@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
+import { InferSchemaType } from "mongoose";
 
 const PokemonSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    type1: { type: String, required: true },
-    type2: { type: String, required: false },
-    number: { type: Number, required: true },
-    image: { type: String, required: true },
+    types: [{ type: String, required: true }],
+    id: { type: Number, required: true },
+    sprite: { type: String, required: true },
     quantity: { type: Number, required: true },
 });
+
+export type PokemonSchema = InferSchemaType<typeof PokemonSchema>;
 
 export const PokemonModel = mongoose.model('Pokemon', PokemonSchema);
 
