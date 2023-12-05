@@ -6,7 +6,7 @@ return(
         <div className='nav-div'>
             <nav className='main-nav'>
                 <div>
-                    <a className='main-link' href='/'>
+                    <a className='main-link' href='/catcher'>
                         PokéCatcher
                     </a>
                 </div>
