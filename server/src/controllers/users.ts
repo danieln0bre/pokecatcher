@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { getUsers, deleteUserById, getUserById } from '../db/users';
+import { getAllUserPokemons } from './pokemonService';
 
 export const getAllUsers = async (req: express.Request, res: express.Response) => {
     try {
@@ -46,5 +47,7 @@ export const updateUser = async (req: express.Request, res: express.Response) =>
         console.log(error);
         return res.sendStatus(400);
     }
+
+
 
 }
