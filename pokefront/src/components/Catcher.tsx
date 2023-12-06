@@ -32,7 +32,7 @@ const Catcher: React.FC = () => {
         }
       );
 
-      if (response2.status !== 201) {
+      if (response2.status !== 200) {
         console.log('Pokemon escaped!');
         alert('Pokemon escaped!');
       }

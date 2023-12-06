@@ -11,16 +11,20 @@ interface PokemonData {
 
 const Collection: React.FC = () => {
   const [pokemonCollection, setPokemonCollection] = useState<PokemonData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Fetch the user's Pokemon data when the component mounts
     const fetchUserPokemonData = async () => {
       try {
-        const response = await axios.get('https://api.example.com/user/pokemon');
+        const response = await axios.get('http://localhost:8080/user/pokemons');
         const data: PokemonData[] = response.data;
         setPokemonCollection(data);
       } catch (error) {
         console.error('Error fetching user Pokemon data:', error);
+        setError('Error fetching user Pokemon data. Please try again.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -31,6 +35,8 @@ const Collection: React.FC = () => {
     <div className='main-div'>
       <div className='collection-panel'>
         <h3>Your collection!</h3>
+        {loading && <p>Loading...</p>}
+        {error && <p className='error-message'>{error}</p>}
         <div className='collection-div'>
           {pokemonCollection.map((pokemon) => (
             <Pokemon key={pokemon.id} pokemon={pokemon} />
