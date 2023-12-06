@@ -14,16 +14,6 @@ const ProfileUpdate: React.FC = () => {
     setEmail(event.target.value);
   };
 
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  const handleConfirmPasswordChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setConfirmPassword(event.target.value);
-  };
-
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // Add update logic here

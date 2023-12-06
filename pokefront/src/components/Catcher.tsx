@@ -1,7 +1,6 @@
-// Catcher.tsx
 import React, { useCallback, useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../sessionContext'; // Update the path
+import { useAuth } from '../sessionContext';
 
 const Catcher: React.FC = () => {
   const { sessionToken } = useAuth();
@@ -17,30 +16,32 @@ const Catcher: React.FC = () => {
     try {
       const randomPokemonId = generateRandomPokemonId();
 
+      // Obtém os dados do Pokémon aleatório
       const response = await axios.get(`https://ex.traction.one/pokedex/pokemon/${randomPokemonId}`);
-      const caughtPokemonData = await response.data[0];
-      
+      const caughtPokemonData = response.data[0];
+
+      // Faz a requisição para apanhar o Pokémon usando o token de sessão como cookie
       const response2 = await axios.post(
         `http://localhost:8080/pokemon/${caughtPokemonData.number}`,
         {},
         {
+          withCredentials: true, // Permitir o envio de cookies
           headers: {
-            Authorization: `Bearer ${sessionToken}`, // Include the sessionToken in the headers
+            'Content-Type': 'application/json',
           },
         }
       );
 
-      //console.log(response2);
-      console.log(caughtPokemonData.number);
       if (response2.status !== 201) {
         console.log('Pokemon escaped!');
         alert('Pokemon escaped!');
       }
+
       setCaughtPokemon(caughtPokemonData);
     } catch (error) {
       console.error('Error catching Pokemon:', error);
     }
-  }, [sessionToken]);
+  }, []);
 
   return (
     <div className='main-div'>
@@ -52,7 +53,7 @@ const Catcher: React.FC = () => {
             <h3>{caughtPokemon.name}</h3>
           </>
         ) : (
-          <img src={"/images/pokeballclosed.png"} alt={`Closed Roulette`} />
+          <img src={'/images/pokeballclosed.png'} alt={`Closed Roulette`} />
         )}
         <button className='catch-button' onClick={handleCatch}>
           Catch!

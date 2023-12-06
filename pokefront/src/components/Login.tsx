@@ -1,10 +1,8 @@
-// Login.tsx
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useAuth } from '../sessionContext'; // Update the path
+import { useAuth } from '../sessionContext';
 
 const Login: React.FC = () => {
-  const { updateSessionToken } = useAuth();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,19 +18,11 @@ const Login: React.FC = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/login', {
-        withCredentials: true,
+      // Call the signIn function from useAuth
+      await signIn({
         email,
         password,
       });
-
-      const sessionToken = response.data.authentication.sessionToken;
-
-      // Update the sessionToken in the context
-      updateSessionToken(sessionToken);
-
-      // Log the updated token
-      console.log('Updated Session Token in Login:', sessionToken);
 
       // Now you can do something with the cookies if needed
     } catch (error) {

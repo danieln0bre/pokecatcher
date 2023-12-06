@@ -1,15 +1,20 @@
 import React from 'react';
 
-const Pokemon: React.FC = () => {
-  // Generate a random number between 1 and 898 (inclusive)
-  const randomPokemonNumber = Math.floor(Math.random() * 898) + 1;
+interface PokemonProps {
+  pokemon: {
+    id: number;
+    name: string;
+    image: string;
+    types: string[]; // Assuming types is an array of strings
+  };
+}
 
-  // Construct the image filename based on the random Pokemon number
-  const imageFileName = `/images/pokemons/${randomPokemonNumber}.png`;
-
+const Pokemon: React.FC<PokemonProps> = ({ pokemon }) => {
   return (
     <div className='single-pokemon'>
-      <img src={imageFileName} alt={`Random Pokemon`} />
+      <img src={pokemon.image} alt={pokemon.name} />
+      <p>{pokemon.name}</p>
+      <p>Types: {pokemon.types.join(', ')}</p>
     </div>
   );
 };
