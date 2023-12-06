@@ -6,12 +6,12 @@ import RegisterPage from './pages/RegisterPage';
 import CollectionPage from './pages/CollectionPage';
 import ProfilePage from './pages/ProfilePage';
 import CatcherPage from './pages/CatcherPage';
-import { SessionProvider } from './sessionContext';
+import { AuthProvider } from './sessionContext';
 
 const Application: React.FC = () => {
   return (
     <BrowserRouter>
-      <SessionProvider>
+      <AuthProvider>
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -19,7 +19,7 @@ const Application: React.FC = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/catcher" element={<CatcherPage />} />
         </Routes>
-      </SessionProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

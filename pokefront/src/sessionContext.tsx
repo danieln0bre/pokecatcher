@@ -1,30 +1,30 @@
-import React, { createContext, useContext, ReactNode, useState } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface SessionContextProps {
+interface AuthContextProps {
   sessionToken: string | null;
-  setSessionToken: (token: string | null) => void;
+  updateSessionToken: (token: string | null) => void;
 }
 
-const SessionContext = createContext<SessionContextProps | undefined>(undefined);
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const useSession = () => {
-  const context = useContext(SessionContext);
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [sessionToken, setSessionToken] = useState<string | null>(null);
+
+  const updateSessionToken = (token: string | null) => {
+    setSessionToken(token);
+  };
+
+  return (
+    <AuthContext.Provider value={{ sessionToken, updateSessionToken }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useSession must be used within a SessionProvider');
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
-
-export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [sessionToken, setSessionToken] = useState<string | null>(null);
-
-  const value: SessionContextProps = {
-    sessionToken,
-    setSessionToken,
-  };
-
-  console.log('Session Token in SessionProvider:', sessionToken);
-
-  return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
-};
-

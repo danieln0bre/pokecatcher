@@ -1,10 +1,10 @@
 // Login.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useSession } from '../sessionContext';
+import { useAuth } from '../sessionContext'; // Update the path
 
 const Login: React.FC = () => {
-  const { setSessionToken } = useSession();
+  const { updateSessionToken } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -27,10 +27,12 @@ const Login: React.FC = () => {
       });
 
       const sessionToken = response.data.authentication.sessionToken;
-      console.log('Session Token:', sessionToken);
 
       // Update the sessionToken in the context
-      setSessionToken(sessionToken);
+      updateSessionToken(sessionToken);
+
+      // Log the updated token
+      console.log('Updated Session Token in Login:', sessionToken);
 
       // Now you can do something with the cookies if needed
     } catch (error) {
@@ -44,12 +46,7 @@ const Login: React.FC = () => {
       <div className='login'>
         <h2>Log in</h2>
         <form onSubmit={handleSubmit}>
-          <input
-            type='email'
-            placeholder='Email'
-            value={email}
-            onChange={handleEmailChange}
-          />
+          <input type='email' placeholder='Email' value={email} onChange={handleEmailChange} />
           <input
             type='password'
             placeholder='Password'
