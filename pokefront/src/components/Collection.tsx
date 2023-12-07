@@ -5,7 +5,7 @@ import Pokemon from './Pokemon';
 interface PokemonData {
   id: number;
   name: string;
-  image: string;
+  sprite: string;
   types: string[];
 }
 
@@ -17,7 +17,15 @@ const Collection: React.FC = () => {
   useEffect(() => {
     const fetchUserPokemonData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/user/pokemons');
+        const response = await axios.get(
+          'http://localhost:8080/user/pokemons',
+          {
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
         const data: PokemonData[] = response.data;
         setPokemonCollection(data);
       } catch (error) {
@@ -37,11 +45,13 @@ const Collection: React.FC = () => {
         <h3>Your collection!</h3>
         {loading && <p>Loading...</p>}
         {error && <p className='error-message'>{error}</p>}
-        <div className='collection-div'>
-          {pokemonCollection.map((pokemon) => (
-            <Pokemon key={pokemon.id} pokemon={pokemon} />
-          ))}
-        </div>
+        {!loading && !error && (
+          <div className='collection-div'>
+            {pokemonCollection.map((pokemon) => (
+              <Pokemon key={pokemon.id} pokemon={pokemon} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

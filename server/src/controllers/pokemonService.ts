@@ -5,6 +5,7 @@ import express from 'express';
 import { PokemonModel, PokemonSchema } from '../db/pokemons';
 import { UserModel } from '../db/users';
 import { getUserBySessionToken } from '../db/users';
+import { getUserPokemonsById } from '../db/users';
 
 const POKEDEXAPI_BASE_URL = 'https://ex.traction.one/pokedex/pokemon';
 
@@ -63,15 +64,14 @@ export const getAllUserPokemons = async (
       return res.sendStatus(403);
     }
 
-    // Fetch the user's Pokemon collection
-    const userPokemons = await UserModel.findById(existingUser.id)
-      .populate('pokemons', 'name types id sprite quantity');
+    // Use the getUserPokemonsById function to fetch the user's Pokemon collection
+    const userPokemons = await getUserPokemonsById(existingUser.id);
 
-    if (!userPokemons) {
+    if (!userPokemons || userPokemons.length === 0) {
       return res.status(404).json({ error: 'User not found or no Pokemon in collection' });
     }
 
-    return res.status(200).json(userPokemons.pokemons);
+    return res.status(200).json(userPokemons);
   } catch (error) {
     console.error('Error fetching user Pokemon data:', error.message);
     return res.status(500).json({ error: 'Internal Server Error' });

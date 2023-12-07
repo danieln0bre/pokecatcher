@@ -1,7 +1,6 @@
 // sessionContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useCallback, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 interface AuthState {
   sessionToken?: string;
@@ -26,7 +25,6 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     return { sessionToken: storedSessionToken || '' };
   });
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     console.log('AuthProvider mounted');
@@ -51,12 +49,11 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
       setData({ sessionToken });
 
-      // Redirect to the '/catcher' route after successful sign-in
-      navigate('/catcher');
+
     } catch (error) {
       console.error('Error signing in:', error);
     }
-  }, [navigate]);
+  }, []);
 
   const signOut = useCallback(() => {
     // Remove the session token from localStorage
