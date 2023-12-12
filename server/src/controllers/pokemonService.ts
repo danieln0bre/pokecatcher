@@ -22,6 +22,14 @@ export const fetchAndSavePokemonData = async (
       return res.sendStatus(403);
     }
 
+    // Check if the user has enough rolls
+    if (existingUser.rolls <= 0) {
+      return res.status(400).json({ error: 'Not enough rolls!' });
+    }
+
+    // Deduct one roll
+    await UserModel.findByIdAndUpdate(existingUser.id, { $inc: { rolls: -1 } });
+
     const response = await axios.get(`${POKEDEXAPI_BASE_URL}/${pokemonId}`);
     const { name, types, number, sprite } = response.data[0];
 
@@ -77,4 +85,6 @@ export const getAllUserPokemons = async (
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+
 

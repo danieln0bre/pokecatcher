@@ -3,12 +3,13 @@ import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true },
+    profilePicture: { type: String, default: "../../../pokefront/public/images/profile-picture.jpeg" },
+    rolls: { type: Number, default: 10 },
     authentication: {
         password: { type: String, required: true, select: false },
         salt: { type: String, select: false },
         sessionToken: { type: String, select: false },
     },
-    // Add an array of ObjectId references to Pokemon model
     pokemons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' }],
 });
 

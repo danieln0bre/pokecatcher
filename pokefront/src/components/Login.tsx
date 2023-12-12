@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useAuth } from '../sessionContext';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Login: React.FC = () => {
   const { signIn } = useAuth();
+  const navigate = useNavigate(); // Use useNavigate for navigation
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,6 +25,9 @@ const Login: React.FC = () => {
         email,
         password,
       });
+
+      // Navigate to /catcher after successful login
+      navigate('/catcher');
 
       // Now you can do something with the cookies if needed
     } catch (error) {

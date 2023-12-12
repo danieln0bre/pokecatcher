@@ -64,7 +64,7 @@ const Register: React.FC = () => {
           />
           <button type='submit'>Submit</button>
         </form>
-        <a className='login-register-redirect' href='/login'>Already a member?</a>
+        <a className='login-register-redirect' href='/'>Already a member?</a>
       </div>
     </div>
   );
