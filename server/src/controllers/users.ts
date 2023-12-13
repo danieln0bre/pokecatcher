@@ -1,7 +1,8 @@
 import express from 'express';
 
-import { getUsers, deleteUserById, getUserById } from '../db/users';
+import { getUsers, deleteUserById, getUserById as getUserByIdMongo } from '../db/users';
 import { getAllUserPokemons } from './pokemonService';
+import { getUserBySessionToken } from '../db/users';
 
 export const getAllUsers = async (req: express.Request, res: express.Response) => {
     try {
@@ -37,7 +38,7 @@ export const updateUser = async (req: express.Request, res: express.Response) =>
             return res.sendStatus(400);
         }
 
-        const user = await getUserById(id);
+        const user = await getUserByIdMongo(id);
 
         user.username = username;
         await user.save();
@@ -47,7 +48,17 @@ export const updateUser = async (req: express.Request, res: express.Response) =>
         console.log(error);
         return res.sendStatus(400);
     }
+}
 
+export const getUserById = async (req: express.Request, res: express.Response) => {
+    try {
+        const { id } = req.params;
 
+        const user = await getUserByIdMongo(id);
 
+        return res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
 }

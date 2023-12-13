@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useAuth } from '../sessionContext';
 const ProfileUpdate: React.FC = () => {
+  const { sessionToken, userId } = useAuth(); // Use the useAuth hook to get the sessionToken
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  const [currentUsername, setCurrentUsername] = useState('');
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
-  };
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
   };
 
   const handleProfilePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,33 +17,73 @@ const ProfileUpdate: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        console.log('userId:', userId);
+        if(userId){
+          const response = await axios.get(
+            `http://localhost:8080/users/${userId}`,
+            {
+              withCredentials: true,
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+          const data = response.data;
+          setCurrentUsername(data.username);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUser();
+  }, [currentUsername]);
+
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Create a FormData object to send both text and file data
     const formData = new FormData();
     formData.append('username', username);
-    formData.append('email', email);
     if (profilePicture) {
       formData.append('profilePicture', profilePicture);
     }
 
-    // Send formData to the server for processing
-    // Example: await updateProfile(formData);
-    console.log('Updating with:', {
-      username,
-      email,
-      profilePicture,
-    });
-
-    // Clear the form fields after submission
-    setUsername('');
-    setEmail('');
-    setProfilePicture(null);
+    try {
+      if(userId){
+        const response = await axios.patch(
+          `http://localhost:8080/users/${userId}`,
+          formData,
+          {
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+  
+        if (response.status === 200) {
+          console.log('Profile updated successfully!');
+          // Clear the form fields after a successful update
+          setUsername('');
+          setProfilePicture(null);
+        } else {
+          console.error('Error updating profile:', response.statusText);
+          // Handle error as needed
+        }
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      // Handle error as needed
+    }
   };
 
   return (
     <div className='update'>
+      <h2>Welcome {currentUsername}</h2>
       <h2>Update</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -53,12 +91,6 @@ const ProfileUpdate: React.FC = () => {
           placeholder='New Username'
           value={username}
           onChange={handleUsernameChange}
-        />
-        <input
-          type='email'
-          placeholder='New Email'
-          value={email}
-          onChange={handleEmailChange}
         />
         <input
           type='file'

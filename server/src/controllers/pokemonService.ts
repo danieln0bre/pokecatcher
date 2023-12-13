@@ -64,26 +64,21 @@ export const getAllUserPokemons = async (
   req: express.Request,
   res: express.Response
 ) => {
-  try {
     const sessionToken = req.cookies['POKE-AUTH'];
     const existingUser = await getUserBySessionToken(sessionToken);
 
     if (!existingUser) {
-      return res.sendStatus(403);
+      return null;
     }
 
     // Use the getUserPokemonsById function to fetch the user's Pokemon collection
     const userPokemons = await getUserPokemonsById(existingUser.id);
 
     if (!userPokemons || userPokemons.length === 0) {
-      return res.status(404).json({ error: 'User not found or no Pokemon in collection' });
+      return [];
     }
 
-    return res.status(200).json(userPokemons);
-  } catch (error) {
-    console.error('Error fetching user Pokemon data:', error.message);
-    return res.status(500).json({ error: 'Internal Server Error' });
-  }
+    return userPokemons;
 };
 
 

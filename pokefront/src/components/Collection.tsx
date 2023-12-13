@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Pokemon from './Pokemon';
+import { useSearchParams } from 'react-router-dom';
 
 interface PokemonData {
   id: number;
@@ -13,12 +14,34 @@ const Collection: React.FC = () => {
   const [pokemonCollection, setPokemonCollection] = useState<PokemonData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryParam = searchParams.get('page');
+  const [page, setPage] = useState(1);
+
+  const incrementPage = useCallback(() => {
+      setPage(pg => pg + 1);
+      setSearchParams((currentSearchParams) => {
+        const newSearchParams = new URLSearchParams(currentSearchParams);
+        newSearchParams.set('page', String(page + 1)); 
+        return newSearchParams;
+      });
+  }, [page, setSearchParams]);
+  const decrementPage = useCallback(() => {
+    if (page > 1) {
+      setPage(pg => pg - 1);
+      setSearchParams((currentSearchParams) => {
+        const newSearchParams = new URLSearchParams(currentSearchParams);
+        newSearchParams.set('page', String(page - 1)); 
+        return newSearchParams;
+      });
+    }
+  }, [page, setSearchParams]);
 
   useEffect(() => {
     const fetchUserPokemonData = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:8080/user/pokemons',
+          `http://localhost:8080/user/pokemons?page=${queryParam}`,
           {
             withCredentials: true,
             headers: {
@@ -37,7 +60,7 @@ const Collection: React.FC = () => {
     };
 
     fetchUserPokemonData();
-  }, []);
+  }, [page]);
 
   return (
     <div className='main-div'>
@@ -47,11 +70,13 @@ const Collection: React.FC = () => {
         {error && <p className='error-message'>{error}</p>}
         {!loading && !error && (
           <div className='collection-div'>
-            {pokemonCollection.map((pokemon) => (
+            {pokemonCollection?.map((pokemon) => (
               <Pokemon key={pokemon.id} pokemon={pokemon} />
             ))}
           </div>
         )}
+        <button type='button' onClick={() => decrementPage()}>{'<'}</button>
+        <button type='button' onClick={() => incrementPage()}>{'>'}</button>
       </div>
     </div>
   );

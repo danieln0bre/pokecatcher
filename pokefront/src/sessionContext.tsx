@@ -1,9 +1,11 @@
 // sessionContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useCallback, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 interface AuthState {
   sessionToken?: string;
+  userId?: string;
 }
 
 interface SignInCredentials {
@@ -13,16 +15,20 @@ interface SignInCredentials {
 
 interface AuthContextData {
   sessionToken?: string;
+  userId?: string;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData | undefined>(undefined);
 
+
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const navigate = useNavigate(); // Use useNavigate for navigation
   const [data, setData] = useState<AuthState>(() => {
     const storedSessionToken = localStorage.getItem('sessionToken');
-    return { sessionToken: storedSessionToken || '' };
+    const userId = localStorage.getItem('userId');
+    return { sessionToken: storedSessionToken || '', userId: userId || undefined };
   });
 
 
@@ -41,14 +47,16 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         { withCredentials: true }
       );
 
+
       const sessionToken = response.data.authentication.sessionToken;
       console.log('sessionToken:', sessionToken);
 
       // Save the session token to localStorage
       localStorage.setItem('sessionToken', sessionToken);
+      localStorage.setItem('userId', response.data._id);
 
-      setData({ sessionToken });
-
+      setData({ sessionToken, userId: response.data._id });
+      navigate('/catcher');
 
     } catch (error) {
       console.error('Error signing in:', error);
@@ -69,7 +77,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <AuthContext.Provider 
-      value={{ sessionToken: data.sessionToken, signIn, signOut }}>
+      value={{ sessionToken: data.sessionToken, signIn, signOut, userId: data.userId }}>
       {children}
     </AuthContext.Provider>
   );

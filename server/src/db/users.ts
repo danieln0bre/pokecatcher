@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { PokemonSchema, getPokemonById } from "./pokemons";
+import cron from "node-cron";
 
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true },
@@ -15,6 +17,30 @@ const UserSchema = new mongoose.Schema({
 
 export const UserModel = mongoose.model('User', UserSchema);
 
+cron.schedule("0 */2 * * *", async () => {
+    try {
+      // Find all users
+      const users = await UserModel.find();
+  
+      // Update the rolls field for each user
+      const updatePromises = users.map(async (user) => {
+        const updatedUser = await UserModel.findByIdAndUpdate(
+          user._id,
+          { $inc: { rolls: 1 } }, // Increment rolls by 1
+          { new: true } // Return the updated document
+        );
+        return updatedUser;
+      });
+  
+      // Wait for all updates to complete
+      await Promise.all(updatePromises);
+  
+      console.log("Rolls updated for all users");
+    } catch (error) {
+      console.error("Error updating rolls:", error);
+    }
+  });
+
 export const getUsers = () => UserModel.find();
 export const getUserByEmail = (email: string) => UserModel.findOne({ email });
 export const getUserBySessionToken = (sessionToken: string) => UserModel.findOne({
@@ -30,7 +56,13 @@ export const getUserPokemonsById = async (userId: string) => {
         if (!user) {
             throw new Error('User not found');
         }
-        return user.pokemons;
+        const promises = user.pokemons.map(async (pokemonId) => {
+            return await getPokemonById(pokemonId._id.toString());
+        });
+
+        const pokemons = await Promise.all(promises);
+
+        return pokemons;
     } catch (error) {
         throw error;
     }
